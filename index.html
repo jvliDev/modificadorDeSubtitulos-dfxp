@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificador de timestamps de subtitulos dfxp</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        textarea { width: 100%; height: 150px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h2>Modificador de timestamps para subtitulos dfxp</h2>
+    <textarea id="texto" placeholder="Introduce el texto aquí..."></textarea>
+    <label for="tiempoAjuste">Tiempo a ajustar (hh:mm:ss):</label>
+    <input type="text" id="tiempoAjuste" placeholder="00:00:00"><br><br>
+
+    <label for="operacion">Operación:</label>
+    <select id="operacion">
+        <option value="sumar">Sumar</option>
+        <option value="restar">Restar</option>
+    </select><br><br>
+    <button onclick="analizarTexto()">Procesar</button>
+    
+    <h3>Resultados:</h3>
+    <textarea id="textoResultado" readonly></textarea>
+
+    <script>
+        /*
+        function convertirADecimal(horas, minutos, segundos, microsegundos) {
+            return horas * 3600 + minutos * 60 + segundos + microsegundos / 1000000;
+        }
+
+        function convertirATexto(totalSegundos) {
+            const horas = Math.floor(totalSegundos / 3600);
+            totalSegundos %= 3600;
+            const minutos = Math.floor(totalSegundos / 60);
+            const segundos = Math.floor(totalSegundos % 60);
+            const microsegundos = Math.floor((totalSegundos % 1) * 1000000);
+            return `${horas}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}.${microsegundos.toString().padStart(3, '0')}`;
+        }
+
+        function validarTiempo(horas, minutos, segundos) {
+            if (horas < 0 || minutos < 0 || segundos < 0) {
+                return false; // No puede ser negativo
+            }
+            if (minutos >= 60 || segundos >= 60) {
+                return false; // Los minutos y segundos no pueden ser 60 o más
+            }
+            return true;
+        }
+
+        function calcularTiempo(valorTiempo) {
+            const tiempoOriginal = valorTiempo;
+            const operacion = document.getElementById("operacion").value;
+            const tiempoAjuste = document.getElementById("tiempoAjuste").value;
+
+            const regexOriginal = /^(\d{1,2}):(\d{2}):(\d{2})\.(\d{3})$/;
+            const regexAjuste = /^(\d{1,2}):(\d{2}):(\d{2})$/;
+            
+            const matchOriginal = regexOriginal.exec(tiempoOriginal);
+            const matchAjuste = regexAjuste.exec(tiempoAjuste);
+
+            if (!matchOriginal || !matchAjuste) {
+                alert("Por favor, ingresa el tiempo en el formato correcto: hh:mm:ss.mmmm para el tiempo original y hh:mm:ss para el tiempo a ajustar");
+                return;
+            }
+
+            const horasOriginal = parseInt(matchOriginal[1]);
+            const minutosOriginal = parseInt(matchOriginal[2]);
+            const segundosOriginal = parseInt(matchOriginal[3]);
+            const microsegundosOriginal = parseInt(matchOriginal[4]);
+
+            const horasAjuste = parseInt(matchAjuste[1]);
+            const minutosAjuste = parseInt(matchAjuste[2]);
+            const segundosAjuste = parseInt(matchAjuste[3]);
+
+            // Validar que los tiempos sean válidos
+            if (!validarTiempo(horasOriginal, minutosOriginal, segundosOriginal) || !validarTiempo(horasAjuste, minutosAjuste, segundosAjuste)) {
+                alert("Por favor, asegúrate de que los minutos y segundos sean menores a 60.");
+                return;
+            }
+
+            let tiempoOriginalDecimal = convertirADecimal(horasOriginal, minutosOriginal, segundosOriginal, microsegundosOriginal);
+            let tiempoAjusteDecimal = convertirADecimal(horasAjuste, minutosAjuste, segundosAjuste, 0);
+
+            if (operacion === "sumar") {
+                tiempoOriginalDecimal += tiempoAjusteDecimal;
+            } else if (operacion === "restar") {
+                tiempoOriginalDecimal -= tiempoAjusteDecimal;
+            } else {
+                alert("Por favor, selecciona una operación válida: sumar o restar");
+                return;
+            }
+
+            const resultado = convertirATexto(tiempoOriginalDecimal);
+            return resultado;
+            
+        }*/
+
+        function convertirADecimal(horas, minutos, segundos, microsegundos) {
+            return horas * 3600 + minutos * 60 + segundos + microsegundos / 1000000;
+        }
+
+        function convertirATexto(totalSegundos) {
+            const horas = Math.floor(totalSegundos / 3600);
+            totalSegundos %= 3600;
+            const minutos = Math.floor(totalSegundos / 60);
+            const segundos = Math.floor(totalSegundos % 60);
+            const microsegundos = Math.floor((totalSegundos % 1) * 1000000);
+            return `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}.${microsegundos.toString().padStart(3, '0')}`;
+        }
+
+        function validarTiempo(horas, minutos, segundos) {
+            if (horas < 0 || minutos < 0 || segundos < 0) {
+                return false; // No puede ser negativo
+            }
+            if (minutos >= 60 || segundos >= 60) {
+                return false; // Los minutos y segundos no pueden ser 60 o más
+            }
+            return true;
+        }
+
+        function calcularTiempo(valorTiempo) {
+            const tiempoOriginal = valorTiempo;
+            const operacion = document.getElementById("operacion").value;
+            const tiempoAjuste = document.getElementById("tiempoAjuste").value;
+
+            const regexOriginal = /^(\d{1,2}):(\d{2}):(\d{2})\.(\d{3})$/;
+            const regexAjuste = /^(\d{1,2}):(\d{2}):(\d{2})$/;
+            
+            const matchOriginal = regexOriginal.exec(tiempoOriginal);
+            const matchAjuste = regexAjuste.exec(tiempoAjuste);
+
+            if (!matchOriginal || !matchAjuste) {
+                alert("Por favor, ingresa el tiempo en el formato correcto: hh:mm:ss.mmmm para el tiempo original y hh:mm:ss para el tiempo a ajustar");
+                return;
+            }
+
+            const horasOriginal = parseInt(matchOriginal[1]);
+            const minutosOriginal = parseInt(matchOriginal[2]);
+            const segundosOriginal = parseInt(matchOriginal[3]);
+            const microsegundosOriginal = parseInt(matchOriginal[4]);
+
+            const horasAjuste = parseInt(matchAjuste[1]);
+            const minutosAjuste = parseInt(matchAjuste[2]);
+            const segundosAjuste = parseInt(matchAjuste[3]);
+
+            // Validar que los tiempos sean válidos
+            if (!validarTiempo(horasOriginal, minutosOriginal, segundosOriginal) || !validarTiempo(horasAjuste, minutosAjuste, segundosAjuste)) {
+                alert("Por favor, asegúrate de que los minutos y segundos sean menores a 60.");
+                return;
+            }
+
+            let tiempoOriginalDecimal = convertirADecimal(horasOriginal, minutosOriginal, segundosOriginal, microsegundosOriginal);
+            let tiempoAjusteDecimal = convertirADecimal(horasAjuste, minutosAjuste, segundosAjuste, 0);
+
+            if (operacion === "sumar") {
+                tiempoOriginalDecimal += tiempoAjusteDecimal;
+            } else if (operacion === "restar") {
+                tiempoOriginalDecimal -= tiempoAjusteDecimal;
+            } else {
+                alert("Por favor, selecciona una operación válida: sumar o restar");
+                return;
+            }
+
+            const resultado = convertirATexto(tiempoOriginalDecimal);
+            return resultado;
+        }
+
+        //////
+        // Función personalizada que toma el valor del tiempo y devuelve el nuevo valor
+        function obtenerValorReemplazo(valorTiempo) {
+            // Aquí puedes definir la lógica que quieras para generar el nuevo valor
+            // En este ejemplo, simplemente devolvemos "osaker"
+            console.log("Valor original recibido:", valorTiempo);
+            return "osaker"; // Este es el valor que reemplazará el valor original
+        }
+
+        function analizarTexto() {
+            // Obtener el contenido del texto en el área de texto
+            let texto = document.getElementById("texto").value;
+
+            // Expresión regular para encontrar las cadenas 'begin="..."' y 'end="..."'
+            let regex = /(begin|end)="(\d{2}:\d{2}:\d{2}\.\d{3})"/g;
+
+            // Reemplazar solo el valor dentro de las comillas por el valor obtenido de la función
+            let textoModificado = texto.replace(regex, function(match, tipo, valorTiempo) {
+                // Llamar a la función personalizada y pasarle el valor de tiempo encontrado
+                let nuevoValor = calcularTiempo(valorTiempo);
+                // Reemplazar el valor dentro de las comillas con el nuevo valor
+                return `${tipo}="${nuevoValor}"`;
+            });
+
+            // Colocar el texto modificado en el campo de solo lectura
+            document.getElementById("textoResultado").value = textoModificado;
+        }
+    </script>
+</body>
+</html>
